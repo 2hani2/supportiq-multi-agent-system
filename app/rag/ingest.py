@@ -1,4 +1,5 @@
 
+import os
 from pathlib import Path
 
 import chromadb
@@ -10,9 +11,12 @@ COLLECTION_NAME = "customer_support_policies"
 
 
 def get_collection():
+    chroma_host = os.getenv("CHROMA_HOST", "chromadb")
+    chroma_port = int(os.getenv("CHROMA_PORT", "8000"))
+
     client = chromadb.HttpClient(
-        host="chromadb",
-        port=8000,
+        host=chroma_host,
+        port=chroma_port,
     )
 
     return client.get_or_create_collection(
@@ -23,6 +27,12 @@ def get_collection():
 
 
 def split_text(text: str, chunk_size: int = 800, overlap: int = 100):
+    if chunk_size <= 0:
+        raise ValueError("chunk_size must be greater than zero")
+
+    if overlap < 0 or overlap >= chunk_size:
+        raise ValueError("overlap must be non-negative and smaller than chunk_size")
+
     chunks = []
     start = 0
 
@@ -76,7 +86,9 @@ def ingest_documents():
             ],
         )
 
-        print(f"Ingested {len(chunks)} chunks from {file_path.name}")
+        print(
+            f"Ingested {len(chunks)} chunks from {file_path.name}"
+        )
 
     print(f"Total indexed chunks: {collection.count()}")
 
