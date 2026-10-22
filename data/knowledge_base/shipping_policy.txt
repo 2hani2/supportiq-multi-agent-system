@@ -1,0 +1,10 @@
+
+Shipping and Delivery Policy
+
+Orders are generally processed within 1 to 2 business days.
+Standard delivery typically takes 3 to 7 business days after dispatch.
+Delivery estimates may vary by location, courier, weather, and holidays.
+Tracking information is provided when available after an order is shipped.
+Customers should contact support if an order appears delayed.
+An order marked as processing has not yet been dispatched.
+An order marked as shipped has been dispatched but may not yet be delivered.
